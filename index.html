@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RecallMeet</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f7f6;
+    color: #173b35;
+}
+
+header {
+    background: #0f513f;
+    color: white;
+    padding: 22px 8%;
+}
+
+header h1 {
+    font-size: 28px;
+}
+
+header p {
+    margin-top: 6px;
+    opacity: 0.9;
+}
+
+.container {
+    width: 85%;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+.hero {
+    margin-bottom: 30px;
+}
+
+.hero h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    color: #60716c;
+    font-size: 17px;
+}
+
+.card {
+    background: white;
+    padding: 28px;
+    border-radius: 16px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    margin-bottom: 18px;
+}
+
+.card p {
+    color: #60716c;
+    line-height: 1.6;
+}
+
+label {
+    display: block;
+    margin: 15px 0 7px;
+    font-weight: bold;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccd8d4;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+button {
+    margin-top: 18px;
+    padding: 13px 22px;
+    border: none;
+    border-radius: 8px;
+    background: #0f513f;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0b3d30;
+}
+
+.prepare-button {
+    background: #b58b35;
+}
+
+.prepare-button:hover {
+    background: #8f6d29;
+}
+
+.history-button {
+    background: #315c8c;
+}
+
+.history-button:hover {
+    background: #24476d;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 18px;
+    background: #eef7f3;
+    border-radius: 8px;
+    line-height: 1.7;
+}
+
+.brief-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.brief-section {
+    margin-top: 18px;
+}
+
+.brief-section strong {
+    display: block;
+    margin-bottom: 7px;
+}
+
+.brief-value {
+    background: white;
+    padding: 12px;
+    border-radius: 7px;
+    margin-top: 5px;
+}
+
+.memory-item {
+    padding: 12px;
+    margin-bottom: 10px;
+    background: white;
+    border-left: 4px solid #0f513f;
+    border-radius: 5px;
+}
+
+.evidence-title {
+    margin-top: 25px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.history-subtitle {
+    color: #60716c;
+    margin-bottom: 20px;
+}
+
+.history-timeline {
+    margin-top: 20px;
+}
+
+.history-step {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.history-number {
+    min-width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #0f513f;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.history-content {
+    flex: 1;
+    background: white;
+    padding: 16px;
+    border-radius: 9px;
+    border-left: 4px solid #0f513f;
+}
+
+.history-title {
+    font-weight: bold;
+    font-size: 17px;
+    margin-bottom: 8px;
+    color: #173b35;
+}
+
+.history-text {
+    color: #60716c;
+    line-height: 1.7;
+}
+
+.history-change {
+    border-left-color: #b58b35;
+}
+
+.history-change .history-number {
+    background: #b58b35;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #71817d;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>RecallMeet</h1>
+
+<p>
+An AI agent that remembers every interaction and prepares you for what comes next.
+</p>
+
+</header>
+
+<div class="container">
+
+<div class="hero">
+
+<h2>Meeting Memory</h2>
+
+<p>
+Capture important client conversations, recall relationship history,
+and prepare intelligently for your next meeting.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>🧠 Remember a Meeting</h3>
+
+<p>
+Store important client conversations in long-term memory.
+</p>
+
+<label>Client Name</label>
+
+<input
+id="clientName"
+placeholder="Example: Acme Corp"
+>
+
+<label>Meeting Notes</label>
+
+<textarea
+id="meetingNotes"
+placeholder="Enter important discussion points, commitments, concerns, budget, timeline..."
+></textarea>
+
+<button onclick="rememberMeeting()">
+Remember Meeting
+</button>
+
+<div id="rememberResult"></div>
+
+</div>
+
+<div class="card">
+
+<h3>🔎 Recall Past Context</h3>
+
+<p>
+Ask questions about previous client interactions.
+</p>
+
+<label>What do you want to know?</label>
+
+<input
+id="query"
+placeholder="Example: What were Acme Corp's concerns?"
+>
+
+<button onclick="recallMemory()">
+Recall Memory
+</button>
+
+<div id="recallResult"></div>
+
+</div>
+
+<div class="card">
+
+<h3>✨ Prepare Me for the Next Meeting</h3>
+
+<p>
+RecallMeet uses remembered client history to create
+a personalized meeting preparation brief.
+</p>
+
+<label>Client Name</label>
+
+<input
+id="prepareClient"
+placeholder="Example: Acme Corp"
+>
+
+<button
+class="prepare-button"
+onclick="prepareMeeting()"
+>
+✨ Prepare Me
+</button>
+
+<div id="prepareResult"></div>
+
+</div>
+
+<div class="card">
+
+<h3>🕒 Meeting History</h3>
+
+<p>
+Explore how RecallMeet remembers and understands
+the evolution of your relationship with this client.
+</p>
+
+<label>Client Name</label>
+
+<input
+id="historyClient"
+placeholder="Example: Acme Corp"
+>
+
+<button
+class="history-button"
+onclick="loadHistory()"
+>
+View History
+</button>
+
+<div id="historyResult"></div>
+
+</div>
+
+</div>
+
+<footer>
+
+RecallMeet • Powered by Hindsight Memory
+
+</footer>
+
+<script>
+    // =====================================================
+// REMEMBER MEETING
+// =====================================================
+
+async function rememberMeeting() {
+
+    const clientName =
+        document.getElementById("clientName").value.trim();
+
+    const notes =
+        document.getElementById("meetingNotes").value.trim();
+
+    const result =
+        document.getElementById("rememberResult");
+
+
+    if (!clientName || !notes) {
+
+        result.innerHTML =
+            "<div class='result'>Please enter the client name and meeting notes.</div>";
+
+        return;
+    }
+
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:8000/remember",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    client_name: clientName,
+                    notes: notes
+                })
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        result.innerHTML =
+            "<div class='result'>✓ " +
+            data.message +
+            "</div>";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        result.innerHTML =
+            "<div class='result'>Could not connect to RecallMeet backend.</div>";
+
+    }
+
+}
+
+
+
+// =====================================================
+// RECALL MEMORY
+// =====================================================
+
+async function recallMemory() {
+
+    const query =
+        document.getElementById("query").value.trim();
+
+    const result =
+        document.getElementById("recallResult");
+
+
+    if (!query) {
+
+        result.innerHTML =
+            "<div class='result'>Please enter a question.</div>";
+
+        return;
+    }
+
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:8000/recall",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    query: query
+                })
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        if (!data.memories || data.memories.length === 0) {
+
+            result.innerHTML =
+                "<div class='result'>No relevant memories found.</div>";
+
+        }
+
+        else {
+
+            let memoryHTML = "";
+
+
+            data.memories.forEach(function(memory) {
+
+                memoryHTML +=
+                    "<div class='memory-item'>" +
+                    memory +
+                    "</div>";
+
+            });
+
+
+            result.innerHTML =
+                "<div class='result'>" +
+                memoryHTML +
+                "</div>";
+
+        }
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        result.innerHTML =
+            "<div class='result'>Could not connect to RecallMeet backend.</div>";
+
+    }
+
+}
+
+
+
+// =====================================================
+// PREPARE ME
+// =====================================================
+
+async function prepareMeeting() {
+
+    const clientName =
+        document.getElementById("prepareClient").value.trim();
+
+    const result =
+        document.getElementById("prepareResult");
+
+
+    if (!clientName) {
+
+        result.innerHTML =
+            "<div class='result'>Please enter the client name.</div>";
+
+        return;
+
+    }
+
+
+    result.innerHTML =
+        "<div class='result'>🧠 Hindsight is recalling previous interactions...</div>";
+
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:8000/prepare",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    client_name: clientName
+                })
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        // MEMORY EVIDENCE
+
+        let memories =
+            data.memory_evidence || [];
+
+
+        let memoriesHTML = "";
+
+
+        if (memories.length === 0) {
+
+            memoriesHTML =
+                "<div class='brief-value'>No previous memories found for this client.</div>";
+
+        }
+
+        else {
+
+            memories.forEach(function(memory) {
+
+                memoriesHTML +=
+                    "<div class='memory-item'>" +
+                    memory +
+                    "</div>";
+
+            });
+
+        }
+
+
+        // NEXT MEETING FOCUS
+
+        let focusHTML = "";
+
+
+        if (data.next_meeting_focus) {
+
+            data.next_meeting_focus.forEach(function(item) {
+
+                focusHTML +=
+                    "• " + item + "<br>";
+
+            });
+
+        }
+
+
+        // MEETING BRIEF
+
+        result.innerHTML = `
+
+            <div class="result">
+
+                <div class="brief-title">
+                    📋 Meeting Brief — ${data.client}
+                </div>
+
+
+                <div class="brief-section">
+
+                    <strong>💰 Budget</strong>
+
+                    <div class="brief-value">
+                        ${data.budget || "Not found"}
+                    </div>
+
+                </div>
+
+
+                <div class="brief-section">
+
+                    <strong>📅 Previous Timeline</strong>
+
+                    <div class="brief-value">
+                        ${data.previous_timeline || "Not found"}
+                    </div>
+
+                </div>
+
+
+                <div class="brief-section">
+
+                    <strong>📅 Current Timeline</strong>
+
+                    <div class="brief-value">
+                        ${data.current_timeline || "Not found"}
+                    </div>
+
+                </div>
+
+
+                <div class="brief-section">
+
+                    <strong>🔄 Key Change</strong>
+
+                    <div class="brief-value">
+                        ${data.key_change || "No major change identified."}
+                    </div>
+
+                </div>
+
+
+                <div class="brief-section">
+
+                    <strong>🤝 Relationship Context</strong>
+
+                    <div class="brief-value">
+                        ${data.relationship_context || "No relationship context found."}
+                    </div>
+
+                </div>
+
+
+                <div class="brief-section">
+
+                    <strong>📌 Commitment Focus</strong>
+
+                    <div class="brief-value">
+                        ${data.commitment_focus || "Review previous commitments."}
+                    </div>
+
+                </div>
+
+
+                <div class="brief-section">
+
+                    <strong>🎯 Next Meeting Focus</strong>
+
+                    <div class="brief-value">
+                        ${focusHTML}
+                    </div>
+
+                </div>
+
+
+                <div class="evidence-title">
+                    🧠 Hindsight Memory Evidence
+                </div>
+
+
+                <div class="brief-section">
+
+                    ${memoriesHTML}
+
+                </div>
+
+            </div>
+
+        `;
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        result.innerHTML =
+            "<div class='result'>Could not connect to RecallMeet backend.</div>";
+
+    }
+
+}
+// =====================================================
+// MEETING HISTORY
+// =====================================================
+
+async function loadHistory() {
+
+    const clientName =
+        document.getElementById("historyClient").value.trim();
+
+    const result =
+        document.getElementById("historyResult");
+
+
+    if (!clientName) {
+
+        result.innerHTML =
+            "<div class='result'>Please enter the client name.</div>";
+
+        return;
+
+    }
+
+
+    result.innerHTML =
+        "<div class='result'>🧠 Reconstructing relationship history...</div>";
+
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:8000/history",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    client_name: clientName
+                })
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        if (
+            !data.history ||
+            data.history.length === 0
+        ) {
+
+            result.innerHTML =
+                "<div class='result'>No meeting history found for this client.</div>";
+
+            return;
+
+        }
+
+
+        const memories = data.history;
+
+
+        let budgetMemory = null;
+        let securityMemory = null;
+        let integrationMemory = null;
+        let timelineChangeMemory = null;
+        let timelineMemory = null;
+
+
+        // ANALYZE MEMORIES
+
+        memories.forEach(function(memory) {
+
+            const text = memory.toLowerCase();
+
+
+            // Budget
+
+            if (
+                !budgetMemory &&
+                text.includes("budget")
+            ) {
+
+                budgetMemory = memory;
+
+            }
+
+
+            // Security
+
+            if (
+                !securityMemory &&
+                (
+                    text.includes("security") ||
+                    text.includes("encryption") ||
+                    text.includes("two-factor") ||
+                    text.includes("2fa") ||
+                    text.includes("authentication")
+                )
+            ) {
+
+                securityMemory = memory;
+
+            }
+
+
+            // Integration
+
+            if (
+                !integrationMemory &&
+                (
+                    text.includes("integration") ||
+                    text.includes("existing system")
+                )
+            ) {
+
+                integrationMemory = memory;
+
+            }
+
+
+            // Timeline change
+
+            if (
+                !timelineChangeMemory &&
+                (
+                    text.includes("extended") ||
+                    text.includes("changed from") ||
+                    text.includes("timeline changed")
+                )
+            ) {
+
+                timelineChangeMemory = memory;
+
+            }
+
+
+            // Timeline
+
+            if (
+                !timelineMemory &&
+                text.includes("month")
+            ) {
+
+                timelineMemory = memory;
+
+            }
+
+        });
+
+
+        // =================================================
+        // EXTRACT TIMELINE
+        // =================================================
+
+        let previousTimeline = null;
+        let currentTimeline = null;
+
+
+        const timelineSource =
+            timelineChangeMemory || timelineMemory || "";
+
+
+        const changeMatch =
+            timelineSource.match(
+                /from\s+(\d+)\s+months?\s+to\s+(\d+)\s+months?/i
+            );
+
+
+        if (changeMatch) {
+
+            previousTimeline =
+                changeMatch[1] + " months";
+
+            currentTimeline =
+                changeMatch[2] + " months";
+
+        }
+
+
+        // =================================================
+        // EXTRACT BUDGET
+        // =================================================
+
+        let budget = null;
+
+
+        const allHistoryText =
+            memories.join(" ");
+
+
+        const budgetMatch =
+            allHistoryText.match(
+                /₹\s?\d+(?:\.\d+)?\s?(?:lakh|lakhs|crore|crores)/i
+            );
+
+
+        if (budgetMatch) {
+
+            budget = budgetMatch[0];
+
+        }
+
+
+        // =================================================
+        // BUILD TIMELINE
+        // =================================================
+
+        let timelineHTML = "";
+
+
+        // INITIAL PLAN
+
+        timelineHTML += `
+
+            <div class="history-step">
+
+                <div class="history-number">
+                    1
+                </div>
+
+                <div class="history-content">
+
+                    <div class="history-title">
+                        Initial Plan
+                    </div>
+
+                    <div class="history-text">
+
+                        ${
+                            budget
+                            ? "💰 Budget: " + budget + "<br>"
+                            : ""
+                        }
+
+                        ${
+                            previousTimeline
+                            ? "📅 Delivery target: " + previousTimeline
+                            : "📅 Original delivery timeline was discussed."
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        // EMERGING CONCERN
+
+        if (
+    securityMemory ||
+    integrationMemory
+) {
+
+    let concernText = "";
+
+
+    if (securityMemory) {
+
+        concernText =
+            "🔐 Client raised additional security requirements.";
+
+    }
+
+    else if (integrationMemory) {
+
+        concernText =
+            "🔗 Client raised additional integration requirements.";
+
+    }
+
+
+            timelineHTML += `
+
+                <div class="history-step">
+
+                    <div class="history-number">
+                        2
+                    </div>
+
+                    <div class="history-content">
+
+                        <div class="history-title">
+                            Emerging Concern
+                        </div>
+
+                        <div class="history-text">
+
+                            ${concernText}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+
+        // LATEST CHANGE
+
+        if (timelineChangeMemory) {
+
+            timelineHTML += `
+
+                <div class="history-step">
+
+                    <div class="history-number">
+                        3
+                    </div>
+
+                    <div class="history-content history-change">
+
+                        <div class="history-title">
+                            Latest Change
+                        </div>
+
+                        <div class="history-text">
+
+                            🔄
+
+                            ${
+                                previousTimeline && currentTimeline
+                                ? "Delivery changed from <strong>" +
+                                  previousTimeline +
+                                  "</strong> to <strong>" +
+                                  currentTimeline +
+                                  "</strong>."
+                                : timelineChangeMemory
+                            }
+
+                            <br><br>
+
+                            📌 ${timelineChangeMemory}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+        // FALLBACK
+
+if (
+    !budgetMemory &&
+    !securityMemory &&
+    !integrationMemory &&
+    !timelineChangeMemory
+) {
+
+    timelineHTML = "";
+
+
+    memories.forEach(function(memory, index) {
+
+        timelineHTML += `
+
+            <div class="history-step">
+
+                <div class="history-number">
+                    ${index + 1}
+                </div>
+
+                <div class="history-content">
+
+                    <div class="history-title">
+                        Remembered Interaction
+                    </div>
+
+                    <div class="history-text">
+                        ${memory}
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+// DISPLAY HISTORY
+
+result.innerHTML = `
+
+    <div class="result">
+
+        <div class="brief-title">
+            🕒 ${data.client} — Relationship Timeline
+        </div>
+
+        <div class="history-subtitle">
+
+            RecallMeet reconstructed the important
+            changes across previous interactions.
+
+        </div>
+
+        <div class="history-timeline">
+
+            ${timelineHTML}
+
+        </div>
+
+    </div>
+
+`;
+
+
+} catch (error) {
+
+    console.error(error);
+
+    result.innerHTML =
+        "<div class='result'>Could not connect to RecallMeet backend.</div>";
+
+}
+
+}
+</script>
+
+</body>
+
+</html>
